@@ -1,0 +1,77 @@
+/* Style for the entire chat page */
+body {
+font-family: Arial, sans-serif;
+background-color: #f7f7f7;
+margin: 0;
+padding: 0;
+}
+
+/* Style for the psychologist's profile section */
+.psychologist-profile {
+text-align: center;
+padding: 20px;
+}
+
+.psychologist-profile img {
+max-width: 100px;
+height: auto;
+border-radius: 50%;
+}
+
+.psychologist-profile h2 {
+font-size: 20px;
+margin: 10px 0;
+}
+
+/* Style for the chat container */
+.chat-container {
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+margin: 20px;
+padding: 20px;
+}
+
+/* Style for chat messages */
+.user-chat, .psychologist-chat {
+background-color: #007bff;
+color: #fff;
+border-radius: 5px;
+margin: 10px 0;
+padding: 10px;
+max-width: 70%;
+}
+
+.user-chat {
+align-self: flex-end;
+}
+
+.psychologist-chat {
+align-self: flex-start;
+}
+
+/* Style for the chat input field */
+.chat-input {
+width: 100%;
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 5px;
+margin-top: 10px;
+}
+
+/* Style for the chat send button */
+.chat-send-button {
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 8px 16px;
+margin-top: 10px;
+cursor: pointer;
+font-weight: bold;
+}
+
+.chat-send-button:hover {
+background-color: #0056b3;
+}

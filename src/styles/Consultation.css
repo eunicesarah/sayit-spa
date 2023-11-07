@@ -1,0 +1,85 @@
+/* Style for the entire page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+.psychologist-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    padding-left: 10px;
+    padding-right: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.psikologInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.psikologDesc{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    text-align: left;
+}
+.psychologist-card img {
+    max-width: 75px;
+    height: auto;
+    border-radius: 50%;
+    
+}
+
+.psychologist-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.psychologist-card p {
+    font-size: 14px;
+    margin: 10px 0;
+}
+  
+.psychologist-card button {
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 8px 16px;
+margin-top: 10px;
+cursor: pointer;
+font-weight: bold;
+}
+
+.psychologist-card button:hover {
+background-color: #0056b3;
+}
+
+
+button.chat-button {
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 8px 16px;
+margin-top: 10px;
+cursor: pointer;
+font-weight: bold;
+}
+
+button.chat-button:hover {
+background-color: #0056b3;
+}
