@@ -21,7 +21,7 @@ const psychologists = [
 
 const Consultation = () => {
   return (
-    <div>
+    <div className='consultation'>
       <h1>Daftar Psikolog</h1>
       {psychologists.map((psychologist) => (
         <div key={psychologist.id} className="psychologist-card">
