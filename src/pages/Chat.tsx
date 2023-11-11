@@ -9,20 +9,21 @@ import {
   extendTheme,
   ChakraProvider,
 } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 
 interface Psychologist {
   id: number;
   name: string;
 }
 
-// Define your custom colors
+
 const customColors = {
   primary: '#4560A6',
   secondary: '#D9D9D9',
   accent: '#F3AA98',
 };
 
-// Extend the Chakra UI theme with your custom colors
+
 const customTheme = extendTheme({
   colors: {
     roomchat: {
@@ -41,20 +42,28 @@ const ChatRoom = () => {
   const [newMessage, setNewMessage] = useState('');
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
   const psychologists: Psychologist[] = [
     { id: 1, name: 'Yuyun SP.g' },
     { id: 2, name: 'Nana Sudrana' },
-    // Add more psychologists as needed
+    
   ];
 
-  const handlePsychologistSelect = (psychologist: Psychologist): void => {
-    setSelectedPsychologist(psychologist);
-  };
+
+  const { psychologistId } = useParams<{ psychologistId: string }>();
+
+  useEffect(() => {
+
+    const foundPsychologist = psychologists.find((psychologist: { id: number; }) => psychologist.id === Number(psychologistId));
+    if (foundPsychologist) {
+      setSelectedPsychologist(foundPsychologist);
+    }
+  }, [psychologistId]);
 
   const handleSendMessage = (): void => {
-    setChatMessages([...chatMessages, { sender: 'user', message: newMessage }]);
-    setNewMessage('');
+    if (newMessage.trim() !== '') { 
+      setChatMessages([...chatMessages, { sender: 'user', message: newMessage }]);
+      setNewMessage('');
+    }
   };
 
   const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -64,7 +73,7 @@ const ChatRoom = () => {
     }
   };
 
-  // Scroll to the bottom of the chat when a new message is added
+
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -78,7 +87,7 @@ const ChatRoom = () => {
           <Text fontSize="xl" mb={4}>Daftar Psikolog</Text>
           <ul>
             {psychologists.map((psychologist) => (
-              <li key={psychologist.id} onClick={() => handlePsychologistSelect(psychologist)} style={{ cursor: 'pointer' }}>
+              <li key={psychologist.id} onClick={() => setSelectedPsychologist(psychologist)} style={{ cursor: 'pointer' }}>
                 {psychologist.name}
               </li>
             ))}
@@ -118,7 +127,7 @@ const ChatRoom = () => {
                       color="black"
                       bg={message.sender === 'user' ? 'roomchat.userMessage' : 'roomchat.psychologistMessage'}
                       alignSelf={message.sender === 'user' ? 'flex-end' : 'flex-start'}
-                      maxW="50%" // Atur lebar maksimal buble chat di sini
+                      maxW="50%" 
                       wordBreak="break-word"
                       height={message.message.length > 50 ? 'auto' : '50px'}
                     >
@@ -135,6 +144,7 @@ const ChatRoom = () => {
                     )}
                   </Flex>
                 ))}
+
               </Flex>
 
               <Flex className="input-section" p={2} borderTop="1px" borderColor="roomchat.inputBorder">
