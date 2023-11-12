@@ -5,13 +5,15 @@ import { FormControl, IconButton, Input, InputAdornment, InputLabel, TextField }
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 // import PopUp from '@/components/fragments/popup'
 // import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [clinic, setClinic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState('');
@@ -34,11 +36,32 @@ const Register = () => {
     event.preventDefault();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const history = useNavigate();
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle registration logic here
+    console.log('submitting...');
+    console.log(name, email, phoneNumber, password, clinic);
+    
+    try {
+      const response = await axios.post('http://localhost:3000/psikolog/register/', {
+        psikolog_name: name,
+        psikolog_email: email,
+        psikolog_phone: phoneNumber,
+        psikolog_password: password,
+        psikolog_klinik: clinic,
+      });
+  
+      if (response.status === 200) {
+        history('/login/');
+      } else {
+        console.log('Registration failed:', response);
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
-
+  
   return (
     <div className="box">
       <h2>REGISTER</h2>
@@ -96,6 +119,12 @@ const Register = () => {
                         />
                     </FormControl>
                     
+                </div>
+                <div className="inputBox">
+                    <TextField sx={{ width: '26ch', marginBottom:'15px' }} id="phoneNumber" label="Phone Number" placeholder="Type your phone number" variant="standard" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                </div>
+                <div className="inputBox">
+                    <TextField sx={{ width: '26ch', marginBottom:'15px' }} id="klinik" label="Klinik" placeholder="Type your clinic" variant="standard" value= {clinic} onChange={(e) => setClinic(e.target.value)}/>
                 </div>
                 <button type="submit" name="" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Sign Up"}

@@ -4,7 +4,8 @@ import { FormControl, IconButton, Input, InputAdornment, InputLabel, TextField }
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 // import PopUp from '@/components/fragments/popup'
 // import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const history = useNavigate();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -19,9 +21,21 @@ const Login = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
+    console.log('submitting...');
+    console.log(email, password);
+  
+    try {
+      axios.post('http://localhost:3000/psikolog/login/', {
+      email: email,
+      password: password,
+    });
+    history('/register');
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   return (
