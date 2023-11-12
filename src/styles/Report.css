@@ -10,23 +10,16 @@ h1 {
     text-align: center;
     margin: 20px 0;
 }
-.consultation{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
 .psychologist-card {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 600px;
     margin: 10px;
     padding: 20px;
     padding-left: 10px;
     padding-right: 20px;
     text-align: center;
-    align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -64,7 +57,7 @@ h1 {
 background-color: #007bff;
 color: #fff;
 border: none;
-border-radius: 15px;
+border-radius: 5px;
 padding: 8px 16px;
 margin-top: 10px;
 cursor: pointer;

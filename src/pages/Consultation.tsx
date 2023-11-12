@@ -20,8 +20,9 @@ const psychologists = [
 ];
 
 const Consultation = () => {
+  const [selectedPsychologistId, setSelectedPsychologistId] = React.useState<number | null>(null);
   return (
-    <div>
+    <div className='consultation'>
       <h1>Daftar Psikolog</h1>
       {psychologists.map((psychologist) => (
         <div key={psychologist.id} className="psychologist-card">
@@ -39,12 +40,13 @@ const Consultation = () => {
 
             <div className="psikolofInfo">
                 <Link to={`/chat/${psychologist.id}`}>
-                <button>Chat</button>
+                <button onClick={() => setSelectedPsychologistId(psychologist.id)}>Chat</button>
                 </Link>
             </div>
 
         </div>
       ))}
+      {selectedPsychologistId && <Link to={`/chat/${selectedPsychologistId}`}></Link>}
     </div>
   );
 };

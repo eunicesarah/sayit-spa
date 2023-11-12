@@ -1,0 +1,28 @@
+.CardReport{
+    width: 500px;
+    height: 700px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:start;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    &:hover{
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    }
+}
+
+.CardReport__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
