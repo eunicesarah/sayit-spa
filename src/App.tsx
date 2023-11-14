@@ -11,6 +11,7 @@ import Chat from './pages/Chat';
 import Report from './pages/Report';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Profile from './pages/Profile';
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/chat/:psychologistId" element={<Chat />} />
+        <Route path ="/profile" element={<Profile />} />
       </Routes>
       {/* {!isLoginPage && !isRegisterPage && <Footer />} */}
     </div>
