@@ -39,28 +39,52 @@ const Register = () => {
   const history = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    if (!name || !email || !phoneNumber || !password || !clinic) {
+      setIsLoading(false);
+      setError('Please fill all fields.');
+      
+      return;
+    }
+
+    const confirmPassInput = (e.target as HTMLFormElement).querySelector('#userConfirmPassword') as HTMLInputElement;
+
+    if (password !== confirmPassInput.value) {
+      setIsLoading(false);
+      setError("Your password and confirm password don't match.");
+      
+      return;
+    }
+    
     console.log('submitting...');
     console.log(name, email, phoneNumber, password, clinic);
     
     try {
-      const response = await axios.post('http://localhost:3000/psikolog/register/', {
+      const response = await axios.post('http://localhost:3010/psikolog/register/', {
         psikolog_name: name,
         psikolog_email: email,
         psikolog_phone: phoneNumber,
         psikolog_password: password,
         psikolog_klinik: clinic,
       });
-      navigate('/login');
+      setIsLoading(false);
+      navigate('/');
       console.log('Response:', response);
       if (response.status === 200) {
         // Registrasi berhasil, arahkan pengguna ke halaman login
-        navigate('/login');
+        navigate('/');
       } else {
         console.log('Registration failed:', response);
       }
     }
-    catch (error) {
-      console.log(error);
+    catch (error: any) {
+      setIsLoading(false);
+      
+      console.error('Error:', error.response.data);
+
+        // Tangkap pesan kesalahan dari server
+      setError(error.response.data.error || 'Invalid Email');
     }
     
   };
@@ -68,7 +92,7 @@ const Register = () => {
   return (
     <div className="box">
       <h2>REGISTER</h2>
-            {/* {error && <p className={styles.error}>{error}</p>} */}
+      {error && <p className="error">{error}</p>}
             <form className="registerForm" onSubmit={handleSubmit} method="POST">
                 <div className="inputBox">
                     <TextField sx={{ width: '26ch', marginBottom:'15px' }} id="email" label="Email" placeholder="Type your email" variant="standard" value={email} onChange={(e) => setEmail(e.target.value)}/>
@@ -133,7 +157,7 @@ const Register = () => {
                   {isLoading ? "Loading..." : "Sign Up"}
                 </button>
                 <p className="registerText">
-                  Have an account? <Link className="loginLink" to="/login">Login</Link>
+                  Have an account? <Link className="loginLink" to="/">Login</Link>
                 </p>
             </form>
     </div>

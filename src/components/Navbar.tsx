@@ -21,7 +21,7 @@ const Navbar = () => {
     console.log('Logging out...');
     console.log('User:', localStorage.getItem('user'));
     console.log('Token:', localStorage.getItem('jwt'));
-    navigate('/login');
+    navigate('/');
   };
 
   
@@ -34,7 +34,7 @@ const Navbar = () => {
       </div>
       <div className="nav-links">
         <ul>
-          <li><Link to="/">Home</Link></li>
+          {/* <li><Link to="/">Home</Link></li> */}
           <li><Link to="/consultation">Consultation</Link></li>
           <li><Link to="/report">History</Link></li>
           {localStorage.getItem('user') !== null ? (
@@ -65,7 +65,7 @@ const Navbar = () => {
           ) : (
             <li>
               <button className='signinButton'>
-                <Link to="/login">Sign In</Link>
+                <Link to="/">Sign In</Link>
               </button>
             </li>
           )}

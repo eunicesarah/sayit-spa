@@ -15,17 +15,18 @@ import Profile from './pages/Profile';
 
 function App() {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  const isLoginPage = location.pathname === '/';
   const isRegisterPage = location.pathname === '/register';
   return (
     <div className="App">
-      {<Navbar/>}
+      {!isLoginPage && !isRegisterPage && <Navbar />}
+
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
         <Route path="/consultation" element={<Consultation />} />
         <Route path="/Report" element={<Report />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Login" element={<Login />} />
+        {/* <Route path="/Login" element={<Login />} /> */}
         <Route path="/chat/:psychologistId" element={<Chat />} />
         <Route path ="/profile" element={<Profile />} />
       </Routes>

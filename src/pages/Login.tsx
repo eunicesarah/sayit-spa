@@ -27,7 +27,7 @@ const Login = () => {
     console.log(email, password);
   
     try {
-      const response = await axios.post('http://localhost:3000/psikolog/login/', {
+      const response = await axios.post('http://localhost:3010/psikolog/login/', {
         psikolog_email: email,
         psikolog_password: password,
     });
@@ -35,7 +35,6 @@ const Login = () => {
     localStorage.setItem('user', JSON.stringify(response.data.user));
     console.log('Response:', response.data);
     if (response.data === "failed") {
-      // history('/'); 
       setEmail('');
       setPassword('');
       
@@ -43,10 +42,9 @@ const Login = () => {
 
     }
     else {
-      // history('/'); 
       setEmail('');
       setPassword('');
-      history('/');
+      history('/consultation');
     }
   } catch (error) {
   

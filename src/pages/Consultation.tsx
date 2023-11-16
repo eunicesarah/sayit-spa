@@ -34,7 +34,7 @@ const Consultation = () => {
             console.log('Unauthorized - Redirecting to login page');
             localStorage.removeItem('user');
             localStorage.removeItem('jwt');
-            window.location.replace('/login'); 
+            window.location.replace('/'); 
           }
           return Promise.reject(error);
         }
@@ -43,7 +43,7 @@ const Consultation = () => {
         const user = localStorage.getItem('user');
     
         if (!user) {
-          navigate('/login');
+          navigate('/');
           alert('Anda harus login terlebih dahulu untuk mengakses halaman ini');
         } else {
 
@@ -57,7 +57,7 @@ const Consultation = () => {
     
   
     const fetchPsiko = () => {
-      return axios.get('http://localhost:3000/user/consultation')
+      return axios.get('http://localhost:3010/user/consultation')
         .then((response) => setPsychologists(response.data.data));
     };
   
