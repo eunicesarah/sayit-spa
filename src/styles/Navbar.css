@@ -1,11 +1,16 @@
 .navbar {
     background-image: linear-gradient(to bottom, #4560A6 ,#313e61);
     color: #fff;
-    padding: 10px 0;
     display: flex;
+    width: 100%;
+  }
+  .navbarContainer{
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 15px;
+    margin-top: 0px;
+    display: flex;
   }
   
   .logo {
@@ -49,3 +54,63 @@
     font-weight: bold;
   }
   
+  .avatar{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+
+}
+.avatarButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.dropdownWrap{
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+.dropdown {
+    position: absolute;
+    right: 20px;
+    top: 75px;
+    background: #F3AA98;
+    color: black;
+    border-radius: 7px;
+    width: 120px;
+    height: 50px;
+    /* padding: 8px; */
+    display: flex;
+    flex-direction: column;
+    z-index: 2; 
+    font-size: 16px;
+    justify-content: center;
+    gap: 5px;
+
+}
+
+.dropdown button {
+  
+    background: #F3AA98;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    
+}
+.dropdown button:hover {
+    /* background: whitesmoke; */
+    cursor: pointer;
+    transition: 0.3s;
+    color: whitesmoke;
+    
+}
+.dropdown {
+    display: flex;
+}
+
+.dropdownVisible .dropdown {
+    display: flex;
+}

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/Consultation.css';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { Alert, AlertIcon, AlertTitle, Flex, ModalHeader, Text, Button} from '@chakra-ui/react';
+import {Flex, Text, Button} from '@chakra-ui/react';
 import { Snackbar } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 
 type Psychologist = {
@@ -20,26 +21,57 @@ type Psychologist = {
 };
 
 const Consultation = () => {
-  const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
-  const [selectedPsychologist, setSelectedPsychologist] = useState<Psychologist | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string>('');
+    const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
+    const [selectedPsychologist, setSelectedPsychologist] = useState<Psychologist | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedTime, setSelectedTime] = useState<string>('');
+    const navigate = useNavigate();
+    axios.interceptors.response.use(
+        (response) => response,
+        (error) => {
+          if (error.response && error.response.status === 401) {
+            
+            console.log('Unauthorized - Redirecting to login page');
+            localStorage.removeItem('user');
+            localStorage.removeItem('jwt');
+            window.location.replace('/login'); 
+          }
+          return Promise.reject(error);
+        }
+      );
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+    
+        if (!user) {
+          navigate('/login');
+          alert('Anda harus login terlebih dahulu untuk mengakses halaman ini');
+        } else {
 
-  const fetchPsiko = () => {
-    return axios.get('http://localhost:3000/psikolog/consultation')
-      .then((response) => setPsychologists(response.data.data));
-  };
-
-  useEffect(() => {
-    fetchPsiko();
-  }, []);
-
-  const handleBookClick = (psychologist: Psychologist) => {
-    setOpen(true);
-    setSelectedPsychologist(psychologist);
-    setSelectedDate(null);
-    setSelectedTime('');
-  };
+          const token = localStorage.getItem('jwt')
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          console.log('Token:', token);
+          console.log('User:', user);
+          fetchPsiko();
+        }
+      }, [navigate]);
+    
+  
+    const fetchPsiko = () => {
+      return axios.get('http://localhost:3000/user/consultation')
+        .then((response) => setPsychologists(response.data.data));
+    };
+  
+    useEffect(() => {
+      fetchPsiko();
+    }, []);
+  
+    const handleBookClick = (psychologist: Psychologist) => {
+      setOpen(true);
+      setSelectedPsychologist(psychologist);
+      setSelectedDate(null);
+      setSelectedTime('');
+    };
+  
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);

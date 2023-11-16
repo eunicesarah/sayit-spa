@@ -15,7 +15,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [clinic, setClinic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigate = useNavigate();
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -50,9 +50,11 @@ const Register = () => {
         psikolog_password: password,
         psikolog_klinik: clinic,
       });
-  
+      navigate('/login');
+      console.log('Response:', response);
       if (response.status === 200) {
-        history('/login/');
+        // Registrasi berhasil, arahkan pengguna ke halaman login
+        navigate('/login');
       } else {
         console.log('Registration failed:', response);
       }
@@ -60,6 +62,7 @@ const Register = () => {
     catch (error) {
       console.log(error);
     }
+    
   };
   
   return (

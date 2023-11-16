@@ -11,7 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [error, setError] = useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const history = useNavigate();
   const handleClickShowPassword = () => {
@@ -27,15 +27,21 @@ const Login = () => {
     console.log(email, password);
   
     try {
-      axios.post('http://localhost:3000/psikolog/login/', {
-      email: email,
-      password: password,
+      const response = await axios.post('http://localhost:3000/psikolog/login/', {
+        psikolog_email: email,
+        psikolog_password: password,
     });
-    history('/register');
+    localStorage.setItem('jwt', response.data.token);
+    localStorage.setItem('user', response.data.user.psikolog_name);
+    console.log('Response:', response.data);
+    if (response.data !== "failed") {
+      history('/'); 
     }
-    catch (error) {
-      console.log(error);
-    }
+  } catch (error) {
+  
+    setError('Email not registered or wrong password');
+    console.error(error);
+  }
   };
 
   return (
