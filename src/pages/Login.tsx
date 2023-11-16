@@ -32,10 +32,21 @@ const Login = () => {
         psikolog_password: password,
     });
     localStorage.setItem('jwt', response.data.token);
-    localStorage.setItem('user', response.data.user.psikolog_name);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
     console.log('Response:', response.data);
-    if (response.data !== "failed") {
-      history('/'); 
+    if (response.data === "failed") {
+      // history('/'); 
+      setEmail('');
+      setPassword('');
+      
+      alert('Email not registered or wrong password');
+
+    }
+    else {
+      // history('/'); 
+      setEmail('');
+      setPassword('');
+      history('/');
     }
   } catch (error) {
   

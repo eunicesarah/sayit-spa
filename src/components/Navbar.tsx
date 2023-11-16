@@ -44,10 +44,12 @@ const Navbar = () => {
                 <button className='avatarButton' onClick={() => toggleDropdown()}>
                 <Avatar
                   className="avatar"
+                  alt="Avatar"
+                  sx={{ bgcolor: "#F3AA98" }}
                   
                  
                 >
-                  {user.charAt(0).toUpperCase()}
+                  {/* {user.charAt(0).toUpperCase()} */}
                 </Avatar>
                 </button>
                 {dropdownVisible && (

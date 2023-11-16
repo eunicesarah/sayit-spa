@@ -1,27 +1,88 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Box, Input, Button, Text } from '@chakra-ui/react';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+type Psychologist = {
+    psikolog_id: any;
+    psikolog_email: string;
+    psikolog_name: string;
+    psikolog_password: string;
+    psikolog_klinik: string;
+    psikolog_phone: string;
+  };
 const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
-
+    const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
     const [formData, setFormData] = useState({
-        name: 'Psikolog 1',
-        email: 'psikolog1@example.com',
-        practiceLocation: 'Klinik Psikologi XYZ',
-        password: 'hehe',
-    });
+        psikolog_id: '',
+        psikolog_name: '',
+        psikolog_phone: '',
+        psikolog_klinik: '',
+        
+      });
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userString = localStorage.getItem('user');
+    
+        if (userString) {
+          const user: Psychologist = JSON.parse(userString);
+          const { psikolog_id, psikolog_name, psikolog_email, psikolog_klinik, psikolog_password, psikolog_phone } = user;
+    
+          setFormData({
+            psikolog_id: psikolog_id,
+            psikolog_name: psikolog_name,
+            psikolog_phone: psikolog_phone,
+            psikolog_klinik: psikolog_klinik,
+            
+          });
+        } else {
+          
+          navigate('/login');
+          alert('Anda harus login terlebih dahulu untuk mengakses halaman ini');
+        }
+      }, [navigate]);
+
+    //   const fetchPsiko = (psychologistId: number) => {
+    //     return axios.get(`http://localhost:3000/user/${psychologistId}`)
+    //       .then((response) => setPsychologists(response.data.data));
+    //   };
+      
+      
+      
+    
+    
 
     const handleEdit = () => {
         setIsEditing(true);
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         setIsEditing(false);
-        // You can add logic here to save the updated data to your backend
-        // For simplicity, we're just logging the updated data to the console
-        console.log('Updated data:', formData);
-        console.log('Updated data:', formData.email);
-    };
+    
+        try {
+          const userString = localStorage.getItem('user');
+          if (userString) {
+            const user: Psychologist = JSON.parse(userString);
+            const { psikolog_id } = user;
+    
+            const response = await axios.put(`http://localhost:3000/psikolog/update/${psikolog_id}`, formData);
+    
+            console.log('Update response:', response.data);
+            // On the client side
+            console.log('Request payload:', formData);
+
+
+
+            
+    
+        
+          }
+        } catch (error) {
+          console.error('Error updating profile:', error);
+         
+        }
+      };
+    
 
     const handleChange = (field: string, value: string) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
@@ -68,9 +129,9 @@ const Profile = () => {
             <Text {...labelStyle} fontWeight={"bold"}>Name:</Text>
             <Flex align="center">
                 <Input
-                value={formData.name}
+                value={formData.psikolog_name}
                 isReadOnly={!isEditing}
-                onChange={(e) => handleChange('name', e.target.value)}
+                onChange={(e) => handleChange('psikolog_name', e.target.value)}
                 borderRadius={10}
                 border={0}
                 height={'30px'}
@@ -80,12 +141,12 @@ const Profile = () => {
             </Box>
 
             <Box mb="3" textAlign="start">
-            <Text {...labelStyle} fontWeight={"bold"}>Email:</Text>
+            <Text {...labelStyle} fontWeight={"bold"}>Phone:</Text>
             <Flex align="center">
                 <Input
-                value={formData.email}
+                value={formData.psikolog_phone}
                 isReadOnly={!isEditing}
-                onChange={(e) => handleChange('email', e.target.value)}
+                onChange={(e) => handleChange('psikolog_phone', e.target.value)}
                 borderRadius={10}
                 border={0}
                 height={'30px'}
@@ -95,12 +156,12 @@ const Profile = () => {
             </Box>
 
             <Box mb="3" textAlign="start">
-            <Text {...labelStyle} fontWeight={"bold"}>Practice Location:</Text>
+            <Text {...labelStyle} fontWeight={"bold"}>Klinik:</Text>
             <Flex align="center">
                 <Input
-                value={formData.practiceLocation}
+                value={formData.psikolog_klinik}
                 isReadOnly={!isEditing}
-                onChange={(e) => handleChange('practiceLocation', e.target.value)}
+                onChange={(e) => handleChange('psikolog_klinik', e.target.value)}
                 borderRadius={10}
                 border={0}
                 height={'30px'}
@@ -109,7 +170,7 @@ const Profile = () => {
             </Flex>
             </Box>
 
-            <Box mb="3" textAlign="start">
+            {/* <Box mb="3" textAlign="start">
             <Text {...labelStyle} fontWeight={"bold"}>Password:</Text>
             <Flex align="center">
                 <Input
@@ -128,7 +189,7 @@ const Profile = () => {
                 // justifyContent={'center'}
                 />
             </Flex>
-            </Box>
+            </Box> */}
 
             <Button
             colorScheme="green"
@@ -153,6 +214,7 @@ const Profile = () => {
             {isEditing ? 'Save' : 'Edit'}
             </Button>
         </Box>
+        
         </Flex>
     );
 };
