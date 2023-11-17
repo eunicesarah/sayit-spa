@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import '../styles/Navbar.css';
 
+const jwtDecode = require('jwt-decode') as any;
+
 const Navbar = () => {
   const navigate = useNavigate();
+  const [role, setRole] = useState(localStorage.getItem('role') || '');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const closeDropdown = () => {
     setDropdownVisible(false);
@@ -24,6 +27,15 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      console.log('Decoded token:', decodedToken);
+      setRole(decodedToken.role);
+    }
+  }, []);
   
 
   return (
@@ -35,8 +47,9 @@ const Navbar = () => {
       <div className="nav-links">
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/consultation">Consultation</Link></li>
           <li><Link to="/report">History</Link></li>
+          <li><Link to="/feedback">Feedback</Link></li>
+          <li><Link to="/consultation">Consultation</Link></li>
           {localStorage.getItem('user') !== null ? (
             <>
               

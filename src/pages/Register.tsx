@@ -43,7 +43,7 @@ const Register = () => {
     console.log(name, email, phoneNumber, password, clinic);
     
     try {
-      const response = await axios.post('http://localhost:3000/psikolog/register/', {
+      const response = await axios.post('http://localhost:3010/psikolog/register/', {
         psikolog_name: name,
         psikolog_email: email,
         psikolog_phone: phoneNumber,

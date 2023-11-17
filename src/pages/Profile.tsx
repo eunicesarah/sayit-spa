@@ -65,7 +65,7 @@ const Profile = () => {
             const user: Psychologist = JSON.parse(userString);
             const { psikolog_id } = user;
     
-            const response = await axios.put(`http://localhost:3000/psikolog/update/${psikolog_id}`, formData);
+            const response = await axios.put(`http://localhost:3010/psikolog/update/${psikolog_id}`, formData);
     
             console.log('Update response:', response.data);
             // On the client side

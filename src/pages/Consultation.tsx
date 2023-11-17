@@ -57,7 +57,7 @@ const Consultation = () => {
     
   
     const fetchPsiko = () => {
-      return axios.get('http://localhost:3000/user/consultation')
+      return axios.get('http://localhost:3010/user/consultation')
         .then((response) => setPsychologists(response.data.data));
     };
   
@@ -83,22 +83,41 @@ const Consultation = () => {
     setSelectedTime(event.target.value);
   };
 
-  const handleBookingConfirmation = () => {
+  const handleBookingConfirmation = async () => {
     if (!selectedDate || !selectedTime) {
-       
-        setSnackbarOpen(true);
-        return;
-      }
-    
-    console.log('Booking Details:', {
-      psychologist: selectedPsychologist,
-      date: selectedDate,
-      time: selectedTime,
-    });
+      setSnackbarOpen(true);
+      return;
+    }
+  
+    // Mengubah format tanggal menjadi ISO-8601
+    const isoDateTime = new Date(selectedDate);
+    isoDateTime.setHours(parseInt(selectedTime.split(":")[0]));
+    isoDateTime.setMinutes(parseInt(selectedTime.split(":")[1]));
+  
+    if (!selectedPsychologist) {
+      console.error('No psychologist selected');
+      return;
+    }
 
-
-    alert('Jadwal berhasil dibooking!');
+    const reservationData = {
+      psikolog_id: selectedPsychologist?.psikolog_id,
+      user_id: 1, // User ID sesuai kebutuhan Anda
+      datetime: isoDateTime.toISOString(), // Menggunakan format ISO-8601
+    };
+  
+    try {
+      const response = await axios.post('http://localhost:3010/user/reservation', reservationData);
+      console.log('Booking successful!', response.data);
+      console.log('Reservation data:', reservationData.psikolog_id);
+      alert('Jadwal berhasil dibooking!');
+    } catch (error) {
+      console.error('Error while booking:', error);
+      // Tampilkan pesan kesalahan jika ada
+      // alert('Failed to book appointment. Please try again.');
+    }
   };
+  
+  
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleSnackbarClose = () => {
