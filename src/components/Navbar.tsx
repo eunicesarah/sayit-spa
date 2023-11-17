@@ -24,7 +24,7 @@ const Navbar = () => {
     console.log('Logging out...');
     console.log('User:', localStorage.getItem('user'));
     console.log('Token:', localStorage.getItem('jwt'));
-    navigate('/login');
+    navigate('/');
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const Navbar = () => {
           ) : (
             <li>
               <button className='signinButton'>
-                <Link to="/login">Sign In</Link>
+                <Link to="/">Sign In</Link>
               </button>
             </li>
           )}

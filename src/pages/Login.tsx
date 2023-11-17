@@ -35,7 +35,6 @@ const Login = () => {
     localStorage.setItem('user', JSON.stringify(response.data.user));
     console.log('Response:', response.data);
     if (response.data === "failed") {
-      // history('/'); 
       setEmail('');
       setPassword('');
       
@@ -43,10 +42,9 @@ const Login = () => {
 
     }
     else {
-      // history('/'); 
       setEmail('');
       setPassword('');
-      history('/');
+      history('/consultation');
     }
   } catch (error) {
   
