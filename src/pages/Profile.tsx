@@ -37,7 +37,7 @@ const Profile = () => {
           });
         } else {
           
-          navigate('/login');
+          navigate('/');
           alert('Anda harus login terlebih dahulu untuk mengakses halaman ini');
         }
       }, [navigate]);
@@ -65,7 +65,7 @@ const Profile = () => {
             const user: Psychologist = JSON.parse(userString);
             const { psikolog_id } = user;
     
-            const response = await axios.put(`http://localhost:3000/psikolog/update/${psikolog_id}`, formData);
+            const response = await axios.put(`http://localhost:3010/psikolog/update/${psikolog_id}`, formData);
     
             console.log('Update response:', response.data);
             // On the client side
@@ -82,6 +82,25 @@ const Profile = () => {
          
         }
       };
+      const handleDelete = async () => {
+        try {
+          const userString = localStorage.getItem('user');
+          if (userString) {
+            const user: Psychologist = JSON.parse(userString);
+            const { psikolog_id } = user;
+    
+            const response = await axios.delete(`http://localhost:3010/psikolog/deleteProfile/${psikolog_id}`);
+    
+            console.log('Delete response:', response.data);
+    
+            // Setelah menghapus akun, arahkan pengguna ke halaman login atau halaman lainnya
+            navigate('/');
+          }
+        } catch (error) {
+          console.error('Error deleting profile:', error);
+        }
+      };
+    
     
 
     const handleChange = (field: string, value: string) => {
@@ -212,6 +231,28 @@ const Profile = () => {
             cursor={'pointer'}
             >
             {isEditing ? 'Save' : 'Edit'}
+            </Button>
+            <Button
+              colorScheme="red"
+              bgColor={'#FF4D4F'}
+              color={'white'}
+              size={'lg'}
+              border={0}
+              borderRadius={10}
+              height={'30px'}
+              width={'150px'}
+              fontWeight={'bold'}
+              onClick={handleDelete}
+              mb="3"
+              mt="35"
+              _hover={{ bg: '#FF3436' }}
+              _active={{
+                bg: '#FF3436',
+                transform: 'scale(0.95)',
+              }}
+              cursor={'pointer'}
+            >
+              Delete Account
             </Button>
         </Box>
         
