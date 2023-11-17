@@ -3,10 +3,11 @@ import '../styles/Register.css';
 
 import { FormControl, IconButton, Input, InputAdornment, InputLabel, TextField } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
-// import PopUp from '@/components/fragments/popup'
+
 // import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PopUp from '../components/PopUp';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -19,7 +20,9 @@ const Register = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-
+  const [showRegisterFinishPopup, setShowRegisterFinishPopup] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState("");
+  const [popUpTitle, setPopUpTitle] = useState("");
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -69,6 +72,9 @@ const Register = () => {
         psikolog_klinik: clinic,
       });
       setIsLoading(false);
+      setPopUpTitle("Successfully registered");
+      setPopUpMessage("Welcome "+name+ "!");
+      setShowRegisterFinishPopup(true);
       navigate('/');
       console.log('Response:', response);
       if (response.status === 200) {
@@ -160,6 +166,12 @@ const Register = () => {
                   Have an account? <Link className="loginLink" to="/">Login</Link>
                 </p>
             </form>
+            <PopUp
+        isVisible={showRegisterFinishPopup}
+        onClose={() => setShowRegisterFinishPopup(false)}
+        message={popUpMessage}
+        messageTitle={popUpTitle}
+      />
     </div>
   );
 };
