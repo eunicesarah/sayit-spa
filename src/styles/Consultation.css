@@ -35,6 +35,7 @@ h1 {
     display: flex;
     flex-direction: row;
     gap: 30px;
+    align-items: center;
 }
 .psikologDesc{
     display: flex;
@@ -89,4 +90,29 @@ font-weight: bold;
 
 button.chat-button:hover {
 background-color: #0056b3;
+}
+
+.psikologName{
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.psikologEmail{
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.psikologPhone{
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.psikologKlinik{
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
 }

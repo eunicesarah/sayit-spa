@@ -136,9 +136,23 @@ const Consultation = () => {
               <img src="yunis.jpg" alt={psychologist.psikolog_name} />
             </div>
             <div className="psikolofDesc">
-              <h2>{psychologist.psikolog_name}</h2>
-              <p>{psychologist.psikolog_phone}</p>
-              <p>{psychologist.psikolog_klinik}</p>
+              <div className="psikologName">
+                <p>Name:  </p>
+                <p>{psychologist.psikolog_name}</p>
+              </div>
+              <div className="psikologEmail">
+                <p>Email:  </p>
+                <p>{psychologist.psikolog_email}</p>
+              </div>
+              <div className="psikologPhone">
+                <p>Phone:  </p>
+                <p>{psychologist.psikolog_phone}</p>
+              </div>
+              <div className="psikologKlinik">
+                <p>Klinik:  </p>
+                <p>{psychologist.psikolog_klinik}</p>
+              </div>
+              
             </div>
           </div>
 
